@@ -6,6 +6,11 @@ pipeline {
     GCLOUD_CREDS=credentials('GCP_SECRET')
   }
   stages {
+    stage('Verificar gcloud') {
+      steps {
+        bat '"C:\\Users\\aevar\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" --version'
+      }
+    }    
     stage('Verify version') {
       steps {
         bat '''
