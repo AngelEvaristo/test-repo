@@ -28,7 +28,7 @@ pipeline {
       steps {
           withCredentials([file(credentialsId: 'GCP_SECRET', variable: 'GCP_SECRET')]) {
               bat '''
-                "%GCLOUD_PATH%\\gcloud.cmd" auth activate-service-account --key-file="$GCLOUD_CREDS"
+                "%GCLOUD_PATH%\\gcloud.cmd" auth activate-service-account --key-file="$GCP_SECRET"
               '''
           }          
         // bat '''
