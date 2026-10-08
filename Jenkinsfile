@@ -24,13 +24,18 @@ pipeline {
           "%GCLOUD_PATH%\\gcloud.cmd" auth activate-service-account --key-file="$GCLOUD_CREDS"
         '''
     }    
-    // stage('Authenticate') {
-    //   steps {
-    //     bat '''
-    //       "%GCLOUD_PATH%\\gcloud.cmd" auth activate-service-account --key-file="$GCLOUD_CREDS"
-    //     '''
-    //   }
-    // }
+    stage('Authenticate') {
+      steps {
+          withCredentials([file(credentialsId: 'GCP_SECRET', variable: 'GCP_SECRET')]) {
+              bat '''
+                "%GCLOUD_PATH%\\gcloud.cmd" auth activate-service-account --key-file="$GCLOUD_CREDS"
+              '''
+          }          
+        // bat '''
+        //   "%GCLOUD_PATH%\\gcloud.cmd" auth activate-service-account --key-file="$GCLOUD_CREDS"
+        // '''
+      }
+    }
     stage('Install service') {
       steps {
         bat '''
