@@ -12,14 +12,14 @@ pipeline {
         bat '"%GCLOUD_PATH%\\gcloud.cmd" --version'
       }
     }    
-    stage('Verify version') {
-      steps {
-        bat '''
-          "%GCLOUD_PATH%\\gcloud.cmd" version'
-          dir
-        '''
-      }
-    }
+    // stage('Verify version') {
+    //   steps {
+    //     bat '''
+    //       "%GCLOUD_PATH%\\gcloud.cmd" version'
+    //       dir
+    //     '''
+    //   }
+    // }
     // withCredentials([file(credentialsId: 'GCP_SECRET', variable: 'GCP_SECRET')]) {
     //     bat '''
     //       "%GCLOUD_PATH%\\gcloud.cmd" auth activate-service-account --key-file="$GCLOUD_CREDS"
