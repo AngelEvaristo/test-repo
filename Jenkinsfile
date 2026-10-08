@@ -15,7 +15,8 @@ pipeline {
     stage('Verify version') {
       steps {
         bat '''
-          "%GCLOUD_PATH%\\gcloud.cmd" version
+          "%GCLOUD_PATH%\\gcloud.cmd" version'
+          dir
         '''
       }
     }
@@ -39,7 +40,7 @@ pipeline {
     stage('Install service') {
       steps {
         bat '''
-          "%GCLOUD_PATH%\\gcloud.cmd" run services replace service.yaml --platform='managed' --region='us-central1'
+          "%GCLOUD_PATH%\\gcloud.cmd" run services replace service.yaml --platform managed --region us-central1
         '''
       }
     }
