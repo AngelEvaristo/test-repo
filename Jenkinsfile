@@ -4,45 +4,46 @@ pipeline {
     CLOUDSDK_CORE_PROJECT='credenciales-364703'
     CLIENT_EMAIL='jenkins@insights-api-localdev.iam.gserviceaccount.com'
     GCLOUD_CREDS=credentials('GCP_SECRET')
+    GCLOUD_PATH='C:\\Users\\aevar\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin'
   }
   stages {
     stage('Verificar gcloud') {
       steps {
-        bat '"C:\\Users\\aevar\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" --version'
+        bat '"%GCLOUD_PATH%\\gcloud.cmd" --version'
       }
     }    
     stage('Verify version') {
       steps {
         bat '''
-          gcloud version
+          "%GCLOUD_PATH%\\gcloud.cmd" version
         '''
       }
     }
     stage('Authenticate') {
       steps {
         bat '''
-          gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
+          "%GCLOUD_PATH%\\gcloud.cmd" auth activate-service-account --key-file="$GCLOUD_CREDS"
         '''
       }
     }
     stage('Install service') {
       steps {
         bat '''
-          gcloud run services replace service.yaml --platform='managed' --region='us-central1'
+          "%GCLOUD_PATH%\\gcloud.cmd" run services replace service.yaml --platform='managed' --region='us-central1'
         '''
       }
     }
     stage('Allow allUsers') {
       steps {
         bat '''
-          gcloud run services add-iam-policy-binding hello --region='us-central1' --member='allUsers' --role='roles/run.invoker'
+          "%GCLOUD_PATH%\\gcloud.cmd" run services add-iam-policy-binding hello --region='us-central1' --member='allUsers' --role='roles/run.invoker'
         '''
       }
     }
   }
   post {
     always {
-      bat 'gcloud auth revoke %CLIENT_EMAIL%'
+      bat '"%GCLOUD_PATH%\\gcloud.cmd" auth revoke %CLIENT_EMAIL%'
     }
   }
 }
