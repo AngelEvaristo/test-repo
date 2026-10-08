@@ -47,7 +47,7 @@ pipeline {
     stage('Allow allUsers') {
       steps {
         bat '''
-          "%GCLOUD_PATH%\\gcloud.cmd" run services add-iam-policy-binding hello --region='us-central1' --member='allUsers' --role='roles/run.invoker'
+          "%GCLOUD_PATH%\\gcloud.cmd" run services add-iam-policy-binding hello --region us-central1 --member allUsers --role "roles/run.invoker"
         '''
       }
     }
